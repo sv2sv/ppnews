@@ -1,39 +1,11 @@
 package com.android.ppnews;
 
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 
-import android.widget.ScrollView;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import com.android.ppnews.net.JHNewsType;
-import com.android.ppnews.net.JHService;
-import com.android.ppnews.net.PPService;
-import com.android.ppnews.pojo.Category;
-import com.android.ppnews.pojo.JHNew;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Converter;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
 
     /**
@@ -41,31 +13,25 @@ public class MainActivity extends AppCompatActivity {
      */
     private ViewPager mViewPager;
 
+    private boolean a = true;
 
-
+    public void click(View v) {
+        if (a) {
+            application.getSp().edit()
+                    .putInt(BaseActivity.KEY_CHANGE_TEXTSIZE, BaseActivity.TEXTSIZE_BIG)
+                    .commit();
+            application.showToast(sp.getInt(BaseActivity.KEY_CHANGE_TEXTSIZE, 0) + "", 1);
+        } else {
+            application.getSp().edit()
+                    .putInt(BaseActivity.KEY_CHANGE_TEXTSIZE, BaseActivity.TEXTSIZE_SMA)
+                    .commit();
+            application.showToast(sp.getInt(BaseActivity.KEY_CHANGE_TEXTSIZE, 0) + "", 1);
+        }
+        a = !a;
+    }
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        // Create the adapter that will return a fragment for each of the three
-        // primary sections of the activity.
-
-
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
-
-
+    public int getLayout() {
+        return R.layout.activity_main;
     }
 
 
