@@ -223,4 +223,23 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onDestroy();
         application.removeActivity(this);
     }
+
+    //布局中Fragment的ID
+    protected abstract int getFragmentContentId();
+
+
+    protected void addFragment(BaseFragment fragment){
+        if(null!=fragment){
+            getFragmentManager().beginTransaction().replace(getFragmentContentId(),fragment,fragment.getClass()
+            .getSimpleName()).addToBackStack(fragment.getClass().getSimpleName()).commitAllowingStateLoss();
+        }
+    }
+
+    protected void removeFragment(BaseFragment fragment){
+        if(getFragmentManager().getBackStackEntryCount()>1){
+            getFragmentManager().popBackStack();
+        }else {
+            finish();
+        }
+    }
 }
