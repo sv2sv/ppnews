@@ -2,8 +2,10 @@ package com.android.ppnews;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 
 import com.android.ppnews.net.JHCall;
@@ -33,6 +35,12 @@ public class NewsFragment extends BaseFragment {
     private OnListFragmentInteractionListener mListener;
 
     public static NewsFragment mNewsFragment;
+
+    private List datas;
+
+    private MyNIRecyclerViewAdapter adapter;
+
+    private RecyclerView mRecyclerView;
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
@@ -62,28 +70,38 @@ public class NewsFragment extends BaseFragment {
             args = getArguments().getString(ARG_STRING);
         }
     }
+    private Callback<JHNew> mycallback = new Callback<JHNew>() {
+        @Override
+        public void onResponse(Call<JHNew> call, Response<JHNew> response) {
+            datas = response.body().getResult().getData();
+            Log.i(TAG, "onResponse: "+datas.size());
+            adapter=new MyNIRecyclerViewAdapter(datas,mListener);
+            mActivity.application.showToast(datas.toString(),1);
+            mRecyclerView.setAdapter(adapter);
+            adapter.notifyDataSetChanged();
+            mActivity.showProgress(false);
+            ((MainActivity)mActivity).setRefreshing(false);
+        }
 
+        @Override
+        public void onFailure(Call<JHNew> call, Throwable t) {
+
+        }
+    };
 
     @Override
     protected void initView(View view, Bundle savedInstanceState) {
         // Set the adapter
-
+            mActivity.application.showToast("initView",1);
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
-            final RecyclerView recyclerView = (RecyclerView) view;
-            recyclerView.setLayoutManager(new LinearLayoutManager(context));
-
-            JHCall.getService().getData(JHNewsType.TOP, JHService.KEY).enqueue(new Callback<JHNew>() {
+            mRecyclerView = (RecyclerView) view;
+            mRecyclerView.setLayoutManager(new LinearLayoutManager(context));
+            JHCall.getService().getData(JHNewsType.TOP, JHService.KEY).enqueue(mycallback);
+            ((MainActivity)mActivity).setRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
                 @Override
-                public void onResponse(Call<JHNew> call, Response<JHNew> response) {
-                    final List<JHNew.ResultBean.DataBean> atas = response.body().getResult().getData();
-                    recyclerView.setAdapter(new MyNIRecyclerViewAdapter(atas, mListener));
-
-                }
-
-                @Override
-                public void onFailure(Call<JHNew> call, Throwable t) {
-
+                public void onRefresh() {
+                    JHCall.getService().getData(JHNewsType.TOP, JHService.KEY).enqueue(mycallback);
                 }
             });
         }

@@ -1,6 +1,7 @@
 package com.android.ppnews;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,27 +22,36 @@ import java.util.List;
  */
 public class MyNIRecyclerViewAdapter extends RecyclerView.Adapter<MyNIRecyclerViewAdapter.ViewHolder> {
 
+    private static String TAG = "adapter";
     private final List<JHNew.ResultBean.DataBean> mValues;
     private final OnListFragmentInteractionListener mListener;
 
     public MyNIRecyclerViewAdapter(List<JHNew.ResultBean.DataBean> items, OnListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
+        if (items!=null){
+
+            Log.i(TAG, "MyNIRecyclerViewAdapter: "+mValues.size());
+        }
+
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.fragment_newsitem, parent, false);
+        Log.i(TAG, "onCreateViewHolder: "+"oncreateviewholder");
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
+
         holder.mItem = mValues.get(position);
         holder.mTitle.setText(holder.mItem.getTitle());
         holder.mTime.setText(holder.mItem.getDate());
         holder.mFrom.setText(holder.mItem.getCategory());
+        Log.i(TAG, "onBindViewHolder: "+holder.mItem.toString());
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,7 +67,13 @@ public class MyNIRecyclerViewAdapter extends RecyclerView.Adapter<MyNIRecyclerVi
 
     @Override
     public int getItemCount() {
+        Log.i(TAG, "getItemCount: "+mValues.size());
         return mValues.size();
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

@@ -1,5 +1,6 @@
 package com.android.ppnews;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
@@ -14,7 +15,7 @@ import android.view.ViewGroup;
 
 public abstract  class BaseFragment extends Fragment {
 
-
+    protected String TAG = this.getClass().getSimpleName();
     protected BaseActivity mActivity;
 
     protected BaseActivity getHoldingActivity(){
@@ -23,7 +24,7 @@ public abstract  class BaseFragment extends Fragment {
 
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(Activity context) {
         super.onAttach(context);
         this.mActivity = (BaseActivity) context;
     }

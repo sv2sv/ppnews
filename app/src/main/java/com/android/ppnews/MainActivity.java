@@ -27,7 +27,9 @@ public class MainActivity extends BaseActivity {
         addFragment(NewsFragment.getInstance(""));
         mSwipeRefreshLayout = (SwipeRefreshLayout) this.findViewById(R.id.srl);
         mSwipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.colorPrimary), Color.DKGRAY);
-        mSwipeRefreshLayout.setProgressBackgroundColorSchemeColor();
+        mSwipeRefreshLayout.setDistanceToTriggerSync(120);
+        mSwipeRefreshLayout.setProgressViewOffset(false,200,450);
+
         getProgressBar(R.id.progress);
 
     }
@@ -39,6 +41,7 @@ public class MainActivity extends BaseActivity {
     public void setRefreshing(boolean enable) {
         mSwipeRefreshLayout.setRefreshing(enable);
     }
+
 
 
 }
