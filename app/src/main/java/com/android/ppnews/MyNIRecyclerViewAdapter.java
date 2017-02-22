@@ -4,6 +4,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.ppnews.NewsFragment.OnListFragmentInteractionListener;
@@ -19,10 +21,10 @@ import java.util.List;
  */
 public class MyNIRecyclerViewAdapter extends RecyclerView.Adapter<MyNIRecyclerViewAdapter.ViewHolder> {
 
-    private final List<JHNew> mValues;
+    private final List<JHNew.ResultBean.DataBean> mValues;
     private final OnListFragmentInteractionListener mListener;
 
-    public MyNIRecyclerViewAdapter(List<JHNew> items, OnListFragmentInteractionListener listener) {
+    public MyNIRecyclerViewAdapter(List<JHNew.ResultBean.DataBean> items, OnListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
     }
@@ -30,15 +32,16 @@ public class MyNIRecyclerViewAdapter extends RecyclerView.Adapter<MyNIRecyclerVi
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.fragment_item, parent, false);
+                .inflate(R.layout.fragment_newsitem, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).id);
-        holder.mContentView.setText(mValues.get(position).content);
+        holder.mTitle.setText(holder.mItem.getTitle());
+        holder.mTime.setText(holder.mItem.getDate());
+        holder.mFrom.setText(holder.mItem.getCategory());
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,21 +61,29 @@ public class MyNIRecyclerViewAdapter extends RecyclerView.Adapter<MyNIRecyclerVi
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
+        public final TextView mTitle;
+        public final TextView mDesc;
+        public final ImageView mImg;
+        public final TextView mFrom;
+        public final TextView mTime;
+        public final ImageButton mLater;
+        public final ImageButton mShare;
+        public final ImageButton mMore;
         public final View mView;
-        public final TextView mIdView;
-        public final TextView mContentView;
-        public DummyItem mItem;
+        public JHNew.ResultBean.DataBean mItem;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            mIdView = (TextView) view.findViewById(R.id.id);
-            mContentView = (TextView) view.findViewById(R.id.content);
+            mTitle = (TextView) mView.findViewById(R.id.title_news);
+            mDesc = (TextView) mView.findViewById(R.id.desc_news);
+            mImg = (ImageView) mView.findViewById(R.id.img_news);
+            mTime = (TextView) mView.findViewById(R.id.time_news);
+            mFrom = (TextView) mView.findViewById(R.id.from_news);
+            mLater = (ImageButton) mView.findViewById(R.id.later_btn);
+            mShare = (ImageButton) mView.findViewById(R.id.share_btn);
+            mMore = (ImageButton) mView.findViewById(R.id.more_btn);
         }
 
-        @Override
-        public String toString() {
-            return super.toString() + " '" + mContentView.getText() + "'";
-        }
     }
 }

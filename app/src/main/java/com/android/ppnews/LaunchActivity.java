@@ -1,8 +1,6 @@
 package com.android.ppnews;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
 
@@ -11,6 +9,11 @@ public class LaunchActivity extends BaseActivity {
     @Override
     public int getLayout() {
         return R.layout.activity_launch;
+    }
+
+    @Override
+    protected int getFragmentContentId() {
+        return R.id.content;
     }
 
     @Override

@@ -1,15 +1,14 @@
 package com.android.ppnews;
 
-import android.support.v4.view.ViewPager;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
+import android.graphics.Color;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.widget.FrameLayout;
 
 public class MainActivity extends BaseActivity {
 
 
     private FrameLayout mContent;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
 
 
     @Override
@@ -19,7 +18,26 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected int getFragmentContentId() {
-        return 0;
+        return R.id.content;
+    }
+
+    @Override
+    protected void init() {
+        super.init();
+        addFragment(NewsFragment.getInstance(""));
+        mSwipeRefreshLayout = (SwipeRefreshLayout) this.findViewById(R.id.srl);
+        mSwipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.colorPrimary), Color.DKGRAY);
+        mSwipeRefreshLayout.setProgressBackgroundColorSchemeColor();
+        getProgressBar(R.id.progress);
+
+    }
+
+    public void setRefreshListener(SwipeRefreshLayout.OnRefreshListener listener) {
+        mSwipeRefreshLayout.setOnRefreshListener(listener);
+    }
+
+    public void setRefreshing(boolean enable) {
+        mSwipeRefreshLayout.setRefreshing(enable);
     }
 
 

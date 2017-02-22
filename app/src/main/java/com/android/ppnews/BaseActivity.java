@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 /**
@@ -34,6 +35,8 @@ public abstract class BaseActivity extends AppCompatActivity {
     public static final int TEXTSIZE_MID = 1;
     public static final int TEXTSIZE_SMA = 0;
     protected SpListener mSpListener = new SpListener();
+
+    private ProgressBar mProgressBar;
 
     public class SpListener implements SharedPreferences.OnSharedPreferenceChangeListener {
 
@@ -242,4 +245,17 @@ public abstract class BaseActivity extends AppCompatActivity {
             finish();
         }
     }
+
+    protected void getProgressBar(int resid) {
+        mProgressBar = (ProgressBar) this.findViewById(resid);
+    }
+
+    public void showProgress(boolean show) {
+        if (show) {
+            mProgressBar.setVisibility(View.VISIBLE);
+        } else {
+            mProgressBar.setVisibility(View.GONE);
+        }
+    }
+
 }

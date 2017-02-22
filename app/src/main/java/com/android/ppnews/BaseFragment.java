@@ -1,6 +1,5 @@
 package com.android.ppnews;
 
-import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
@@ -35,7 +34,7 @@ public abstract  class BaseFragment extends Fragment {
         }
     }
 
-    protected void remove(BaseFragment fragment){
+    protected void removeFragment(BaseFragment fragment) {
         if(null!=fragment){
             getHoldingActivity().removeFragment(fragment);
         }
@@ -53,5 +52,6 @@ public abstract  class BaseFragment extends Fragment {
     protected abstract void initView(View view, Bundle savedInstanceState);
 
     protected abstract int getLayoutId();
+
 
 }

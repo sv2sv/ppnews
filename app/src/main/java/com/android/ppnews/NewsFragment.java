@@ -2,19 +2,20 @@ package com.android.ppnews;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
-import com.android.ppnews.dummy.DummyContent;
-import com.android.ppnews.dummy.DummyContent.DummyItem;
+import com.android.ppnews.net.JHCall;
+import com.android.ppnews.net.JHNewsType;
+import com.android.ppnews.net.JHService;
 import com.android.ppnews.pojo.JHNew;
 
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A fragment representing a list of Items.
@@ -66,11 +67,25 @@ public class NewsFragment extends BaseFragment {
     @Override
     protected void initView(View view, Bundle savedInstanceState) {
         // Set the adapter
+
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
+            final RecyclerView recyclerView = (RecyclerView) view;
             recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            recyclerView.setAdapter(new MyNIRecyclerViewAdapter(DummyContent.ITEMS, mListener));
+
+            JHCall.getService().getData(JHNewsType.TOP, JHService.KEY).enqueue(new Callback<JHNew>() {
+                @Override
+                public void onResponse(Call<JHNew> call, Response<JHNew> response) {
+                    final List<JHNew.ResultBean.DataBean> atas = response.body().getResult().getData();
+                    recyclerView.setAdapter(new MyNIRecyclerViewAdapter(atas, mListener));
+
+                }
+
+                @Override
+                public void onFailure(Call<JHNew> call, Throwable t) {
+
+                }
+            });
         }
     }
 
@@ -111,6 +126,6 @@ public class NewsFragment extends BaseFragment {
      */
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onListFragmentInteraction(JHNew item);
+        void onListFragmentInteraction(JHNew.ResultBean.DataBean item);
     }
 }
