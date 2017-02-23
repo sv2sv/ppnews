@@ -45,6 +45,11 @@ public class MyNIRecyclerViewAdapter extends RecyclerView.Adapter<MyNIRecyclerVi
     }
 
     @Override
+    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+        super.onAttachedToRecyclerView(recyclerView);
+    }
+
+    @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
 
         holder.mItem = mValues.get(position);

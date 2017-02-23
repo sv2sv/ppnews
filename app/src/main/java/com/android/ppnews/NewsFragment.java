@@ -89,6 +89,7 @@ public class NewsFragment extends BaseFragment {
         }
     };
 
+
     @Override
     protected void initView(View view, Bundle savedInstanceState) {
         // Set the adapter
@@ -102,6 +103,19 @@ public class NewsFragment extends BaseFragment {
                 @Override
                 public void onRefresh() {
                     JHCall.getService().getData(JHNewsType.TOP, JHService.KEY).enqueue(mycallback);
+                }
+            });
+            mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+                @Override
+                public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                    super.onScrollStateChanged(recyclerView, newState);
+                    if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    }
+                }
+
+                @Override
+                public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                    super.onScrolled(recyclerView, dx, dy);
                 }
             });
         }

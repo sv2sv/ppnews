@@ -1,97 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:focusable="true"
+    android:orientation="vertical"
+    style="@style/FooterBar">
+
+    <View
+        android:background="@color/grey_300"
+        android:layout_width="match_parent"
+        android:layout_height="1dp" />
+
+    <LinearLayout
     android:layout_width="match_parent"
-    android:orientation="horizontal"
-    android:weightSum="4"
-    android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@color/toolbar_background_color"
+        android:gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end"
+        android:orientation="horizontal">
 
-        <RelativeLayout
+        <LinearLayout
             android:id="@+id/foryou"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content">
+            style="@style/FooterButton">
+
             <ImageView
-                android:layout_marginTop="10dp"
-                android:layout_centerHorizontal="true"
                 android:id="@+id/iv1_footer"
-                android:src="@color/colorAccent"
-                android:layout_width="25dp"
-                android:layout_height="25dp" />
+                style="@style/FooterButtonIcon"
+                android:src="@drawable/quantum_ic_play_newsstand_grey600_24" />
+
             <TextView
-                android:layout_marginBottom="8dp"
-                android:layout_centerHorizontal="true"
-                android:layout_below="@id/iv1_footer"
-                android:text="为您推荐"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </RelativeLayout>
+                style="@style/FooterButtonText"
+                android:text="为您推荐" />
+        </LinearLayout>
 
-    <RelativeLayout
+        <LinearLayout
         android:id="@+id/contentrep"
-        android:layout_weight="1"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content">
-        <ImageView
-            android:layout_marginTop="10dp"
-            android:layout_centerHorizontal="true"
+            style="@style/FooterButton">
+
+            <ImageView
             android:id="@+id/iv2_footer"
-            android:src="@color/colorAccent"
-            android:layout_width="25dp"
-            android:layout_height="25dp" />
-        <TextView
-            android:layout_marginBottom="8dp"
-            android:layout_centerHorizontal="true"
-            android:layout_below="@id/iv2_footer"
-            android:text="内容库"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </RelativeLayout>
+                style="@style/FooterButtonIcon"
+                android:src="@drawable/ic_library_grid_icon" />
 
-    <RelativeLayout
+            <TextView
+                style="@style/FooterButtonText"
+                android:text="内容库" />
+        </LinearLayout>
+
+        <LinearLayout
         android:id="@+id/findmore"
-        android:layout_weight="1"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content">
-        <ImageView
-            android:layout_marginTop="10dp"
-            android:layout_centerHorizontal="true"
+            style="@style/FooterButton">
+
+            <ImageView
             android:id="@+id/iv3_footer"
-            android:src="@color/colorAccent"
-            android:layout_width="25dp"
-            android:layout_height="25dp" />
-        <TextView
-            android:layout_marginBottom="8dp"
-            android:layout_centerHorizontal="true"
-            android:layout_below="@id/iv3_footer"
-            android:text="发现更多"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </RelativeLayout>
+                style="@style/FooterButtonIcon"
+                android:src="@drawable/quantum_ic_explore_grey600_24" />
+
+            <TextView
+                style="@style/FooterButtonText"
+                android:text="发现更多" />
+        </LinearLayout>
 
 
-    <RelativeLayout
+        <LinearLayout
         android:id="@+id/laterread"
-        android:layout_weight="1"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content">
-        <ImageView
-            android:layout_marginTop="10dp"
-            android:layout_centerHorizontal="true"
+            style="@style/FooterButton">
+
+            <ImageView
             android:id="@+id/iv4_footer"
-            android:src="@color/colorAccent"
-            android:layout_width="25dp"
-            android:layout_height="25dp" />
-        <TextView
-            android:layout_marginBottom="8dp"
-            android:layout_centerHorizontal="true"
-            android:layout_below="@id/iv4_footer"
-            android:text="稍后阅读"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </RelativeLayout>
+                style="@style/FooterButtonIcon"
+                android:src="@drawable/quantum_ic_bookmark_border_grey600_24" />
+
+            <TextView
+                style="@style/FooterButtonText"
+                android:text="稍后阅读" />
+        </LinearLayout>
 
 
-
-
-
+</LinearLayout>
 </LinearLayout>

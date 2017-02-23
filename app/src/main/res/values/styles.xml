@@ -17,4 +17,46 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <style name="FooterBar">
+        <item name="android:layout_gravity">bottom</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="FooterButton">
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Caption</item>
+        <item name="android:textSize">@dimen/foot_button_text_size</item>
+        <item name="android:gravity">center</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:background">@drawable/tab_background</item>
+        <item name="android:paddingTop">@dimen/card_inner_content_half_padding</item>
+        <item name="android:paddingBottom">@dimen/card_inner_content_quarter_padding</item>
+        <item name="android:layout_width">0.0dip</item>
+        <item name="android:layout_height">@dimen/foot_bar_button_height</item>
+        <item name="android:includeFontPadding">false</item>
+        <item name="android:layout_weight">1.0</item>
+        <item name="android:animateLayoutChanges">false</item>
+
+    </style>
+
+    <style name="FooterButtonIcon">
+        <item name="android:gravity">center</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:layout_width">22.0dp</item>
+        <item name="android:layout_height">22.0dp</item>
+    </style>
+
+    <style name="FooterButtonText">
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Caption</item>
+        <item name="android:textSize">@dimen/foot_button_text_size</item>
+        <item name="android:textColor">@color/grey_700</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">2.0dip</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:singleLine">true</item>
+    </style>
+
 </resources>

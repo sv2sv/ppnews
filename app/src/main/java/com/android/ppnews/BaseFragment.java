@@ -2,9 +2,9 @@ package com.android.ppnews;
 
 import android.app.Activity;
 import android.app.Fragment;
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TabLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,13 +13,18 @@ import android.view.ViewGroup;
  * Created by wy on 17-2-21.
  */
 
-public abstract  class BaseFragment extends Fragment {
+public abstract class BaseFragment extends Fragment implements TabLayout.OnTabSelectedListener {
 
     protected String TAG = this.getClass().getSimpleName();
     protected BaseActivity mActivity;
 
     protected BaseActivity getHoldingActivity(){
         return mActivity;
+    }
+
+    @Override
+    public void onTabSelected(TabLayout.Tab tab) {
+
     }
 
 
@@ -47,7 +52,7 @@ public abstract  class BaseFragment extends Fragment {
         View view = inflater.inflate(getLayoutId(), container, false);
 
         initView(view, savedInstanceState);
-        return super.onCreateView(inflater, container, savedInstanceState);
+        return view;
     }
 
     protected abstract void initView(View view, Bundle savedInstanceState);

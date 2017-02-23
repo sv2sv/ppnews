@@ -5,4 +5,13 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="appbar_padding_top">8dp</dimen>
     <dimen name="text_margin">16dp</dimen>
+    <dimen name="action_bar_default_elevation">8.0dip</dimen>
+    <item type="dimen" name="foot_button_height">@dimen/foot_bar_height</item>
+    <item type="dimen" name="foot_bar_elevation">@dimen/action_bar_default_elevation</item>
+    <item type="dimen" name="foot_bar_button_height">@dimen/foot_bar_height</item>
+    <dimen name="foot_bar_height">56.0sp</dimen>
+    <dimen name="foot_button_text_size">12.0sp</dimen>
+    <dimen name="foot_button_text_size_selected">13.0sp</dimen>
+    <dimen name="card_inner_content_half_padding">6.0dip</dimen>
+    <dimen name="card_inner_content_quarter_padding">3.0dip</dimen>
 </resources>
