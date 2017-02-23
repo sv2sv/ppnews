@@ -13,7 +13,7 @@ import android.view.ViewGroup;
  * Created by wy on 17-2-21.
  */
 
-public abstract class BaseFragment extends Fragment implements TabLayout.OnTabSelectedListener {
+public abstract class BaseFragment extends Fragment  {
 
     protected String TAG = this.getClass().getSimpleName();
     protected BaseActivity mActivity;
@@ -22,10 +22,6 @@ public abstract class BaseFragment extends Fragment implements TabLayout.OnTabSe
         return mActivity;
     }
 
-    @Override
-    public void onTabSelected(TabLayout.Tab tab) {
-
-    }
 
 
     @Override

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/foot_bar_layout"
     android:focusable="true"
     android:orientation="vertical"
     style="@style/FooterBar">
@@ -31,7 +32,7 @@
         </LinearLayout>
 
         <LinearLayout
-        android:id="@+id/contentrep"
+        android:id="@+id/library"
             style="@style/FooterButton">
 
             <ImageView
