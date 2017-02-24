@@ -2,6 +2,7 @@ package com.android.ppnews;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -20,6 +21,7 @@ public abstract class NavigationDrawerActivity extends PPActivity {
     private ViewGroup drawerRootView;
     private boolean isAccountListExpanded = false;
     private ActionBarDrawerToggle mDrawerToggle;
+    private NavigationView mNavigationView;
 
     public abstract Fragment getPrimaryVisibleFragment();
 
@@ -37,7 +39,10 @@ public abstract class NavigationDrawerActivity extends PPActivity {
         }
         this.drawer = (DrawerLayout) getContentView().findViewById(R.id.drawer);
         this.mDrawerToggle = new ActionBarDrawerToggle(this, drawer, R.string.play_drawer_open, R.string.play_drawer_close);
-        this.drawerRootView = getContentView().findViewById(R.id.drawer_root);
+        this.drawer.addDrawerListener(this.mDrawerToggle);
+        this.mNavigationView = (NavigationView) getContentView().findViewById(R.id.drawer_nav);
+        this.drawerRootView = (ViewGroup) mNavigationView.getHeaderView(0);
+
         if (bundle == null) {
             z = false;
         } else {
@@ -62,9 +67,6 @@ public abstract class NavigationDrawerActivity extends PPActivity {
     @Override
     protected void onSaveInstanceState(Bundle bundle) {
         super.onSaveInstanceState(bundle);
-        String str = "key_account_list_expanded";
-        boolean z = this.drawer != null && this.drawer.isAccountListExpanded();
-        bundle.putBoolean(str, z);
     }
 
 
@@ -130,7 +132,7 @@ public abstract class NavigationDrawerActivity extends PPActivity {
     }
 
     public void onBackPressed() {
-        if (this.drawer == null || !this.drawer.isDrawerOpen()) {
+        if (this.drawer == null || !this.drawer.isDrawerOpen(drawerRootView)) {
             super.onBackPressed();
         } else {
             closeDrawer();

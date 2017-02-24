@@ -44,7 +44,6 @@ public class LaunchActivity extends PPActivity {
         }
         startActivity(new Intent(LaunchActivity.this, HomeActivity.class));
         overridePendingTransition(android.R.anim.fade_in,0);
-
         finish();
         overridePendingTransition(0,android.R.anim.accelerate_interpolator);
     }

@@ -57,7 +57,7 @@ public class HomeFragment extends StatefullFragment<HomeFragmentState> implement
 
     @Override
     protected int getLayoutId() {
-        return R.id.;
+        return R.layout.fragment_home;
     }
 
     @Override

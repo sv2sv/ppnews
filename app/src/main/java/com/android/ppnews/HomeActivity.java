@@ -21,13 +21,9 @@ public class HomeActivity extends PPActivity {
     protected void init() {
         super.init();
         this.mHomeFragment = PPDepend.getFragment(this, R.id.home_fragment);
-        /*addFragment(NewsFragment.getInstance(""));
-        mSwipeRefreshLayout = (SwipeRefreshLayout) this.findViewById(R.id.srl);
-        mSwipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.colorPrimary), Color.DKGRAY);
-        mSwipeRefreshLayout.setDistanceToTriggerSync(120);
-        mSwipeRefreshLayout.setProgressViewOffset(false,200,450);
 
-        getProgressBar(R.id.progress);*/
+
+        getProgressBar(R.id.progress);
 
     }
 

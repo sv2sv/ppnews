@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.SwipeRefreshLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/srl"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/list_foryou"
+        android:name="com.android.ppnews.NewsFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:background="@android:color/transparent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        app:layoutManager="LinearLayoutManager"
+        tools:context="com.android.ppnews.NewsFragment"
+        tools:listitem="@layout/fragment_newsitem" />
+
+</android.support.v4.widget.SwipeRefreshLayout>

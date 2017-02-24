@@ -14,7 +14,7 @@ public class ForYouTab extends HomeTab {
 
     @Override
     public HomeTabFragment getFragment(Context context) {
-        return null;
+        return new ForYouFragment();
     }
 
     @Override
