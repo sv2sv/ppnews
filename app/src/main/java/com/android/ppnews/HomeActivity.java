@@ -1,15 +1,11 @@
 package com.android.ppnews;
 
-import android.graphics.Color;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.widget.FrameLayout;
+import com.android.ppnews.tabfragment.HomeFragment;
 
-public class MainActivity extends BaseActivity {
+public class HomeActivity extends PPActivity {
 
 
-    private FrameLayout mContent;
-    private SwipeRefreshLayout mSwipeRefreshLayout;
-
+    private HomeFragment mHomeFragment;
 
     @Override
     public int getLayout() {
@@ -24,24 +20,21 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void init() {
         super.init();
-        addFragment(NewsFragment.getInstance(""));
+        this.mHomeFragment = PPDepend.getFragment(this, R.id.home_fragment);
+        /*addFragment(NewsFragment.getInstance(""));
         mSwipeRefreshLayout = (SwipeRefreshLayout) this.findViewById(R.id.srl);
         mSwipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.colorPrimary), Color.DKGRAY);
         mSwipeRefreshLayout.setDistanceToTriggerSync(120);
         mSwipeRefreshLayout.setProgressViewOffset(false,200,450);
 
-        getProgressBar(R.id.progress);
+        getProgressBar(R.id.progress);*/
 
     }
 
-    public void setRefreshListener(SwipeRefreshLayout.OnRefreshListener listener) {
-        mSwipeRefreshLayout.setOnRefreshListener(listener);
+    @Override
+    public void onBackPressed() {
+        if (!this.mHomeFragment.handleOnBackPressed()) {
+            super.onBackPressed();
+        }
     }
-
-    public void setRefreshing(boolean enable) {
-        mSwipeRefreshLayout.setRefreshing(enable);
-    }
-
-
-
 }

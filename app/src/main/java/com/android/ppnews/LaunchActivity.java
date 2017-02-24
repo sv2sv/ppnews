@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.os.CountDownTimer;
 import android.view.View;
 
-public class LaunchActivity extends BaseActivity {
+public class LaunchActivity extends PPActivity {
     private CountDownTimer countDownTimer;
     @Override
     public int getLayout() {
@@ -28,7 +28,7 @@ public class LaunchActivity extends BaseActivity {
             @Override
             public void onFinish() {
 
-                startActivity(new Intent(LaunchActivity.this,MainActivity.class));
+                startActivity(new Intent(LaunchActivity.this, HomeActivity.class));
                 overridePendingTransition(android.R.anim.fade_in,0);
 
                 finish();
@@ -42,7 +42,7 @@ public class LaunchActivity extends BaseActivity {
         if(countDownTimer!=null) {
             countDownTimer.cancel();
         }
-        startActivity(new Intent(LaunchActivity.this,MainActivity.class));
+        startActivity(new Intent(LaunchActivity.this, HomeActivity.class));
         overridePendingTransition(android.R.anim.fade_in,0);
 
         finish();

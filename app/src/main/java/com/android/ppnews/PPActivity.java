@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -22,22 +23,37 @@ import android.widget.TextView;
  * Created by wangyao on 17/2/17.
  */
 
-public abstract class BaseActivity extends AppCompatActivity {
+public abstract class PPActivity extends AppCompatActivity {
 
     protected String TAG = this.getClass().getName();
     protected PPApplication application;
     private int color;
     private static final int INVALID_VAL = -1;
     protected ViewGroup mContentView;
+    private View mRootView;
     protected SharedPreferences sp;
     public static final String KEY_CHANGE_TEXTSIZE = "change text size";
     public static final int TEXTSIZE_BIG = 2;
     public static final int TEXTSIZE_MID = 1;
     public static final int TEXTSIZE_SMA = 0;
+    public final Handler mHandler;
     protected SpListener mSpListener = new SpListener();
 
     private ProgressBar mProgressBar;
+    private ActivityState mActivityState;
 
+    public enum ActivityState {
+        CONSTRUCTED,
+        CREATED,
+        STARTED,
+        RESUMED,
+        DESTROYED
+    }
+
+    public PPActivity() {
+        this.mActivityState = ActivityState.CONSTRUCTED;
+        this.mHandler = new Handler();
+    }
     public class SpListener implements SharedPreferences.OnSharedPreferenceChangeListener {
 
         @Override
@@ -53,6 +69,10 @@ public abstract class BaseActivity extends AppCompatActivity {
             }
 
         }
+    }
+
+    public View getContentView() {
+        return this.mRootView;
     }
 
     private void changeTextSize() {
@@ -72,6 +92,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        this.mActivityState = ActivityState.CREATED;
         Log.i(TAG, "oncreate");
         super.onCreate(savedInstanceState);
         application = (PPApplication) this.getApplication();
@@ -87,6 +108,23 @@ public abstract class BaseActivity extends AppCompatActivity {
         init();
 
     }
+
+    public void setContentView(int i) {
+        super.setContentView(i);
+        this.mRootView = getWindow().getDecorView();
+    }
+
+    public void setContentView(View view) {
+        super.setContentView(view);
+        this.mRootView = view;
+    }
+
+    public void setContentView(View view, ViewGroup.LayoutParams layoutParams) {
+        super.setContentView(view, layoutParams);
+        this.mRootView = view;
+    }
+
+
 
     protected void init(){
 
@@ -168,6 +206,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     @Override
     protected void onStart() {
+        this.mActivityState = ActivityState.STARTED;
         super.onStart();
     }
 
@@ -194,6 +233,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
     @Override
     protected void onResume() {
+        this.mActivityState = ActivityState.RESUMED;
         if (sp.getInt(KEY_CHANGE_TEXTSIZE, 0) != TEXTSIZE_MID) {
             changeTextSize();
         }
@@ -202,7 +242,14 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     @Override
     protected void onPause() {
+        this.mActivityState = ActivityState.STARTED;
         super.onPause();
+    }
+
+    @Override
+    protected void onStop() {
+        this.mActivityState = ActivityState.CREATED;
+        super.onStop();
     }
 
     @Override
@@ -217,6 +264,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
+        this.mActivityState = ActivityState.DESTROYED;
         sp.unregisterOnSharedPreferenceChangeListener(mSpListener);
         super.onDestroy();
         application.removeActivity(this);
@@ -226,14 +274,14 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected abstract int getFragmentContentId();
 
 
-    protected void addFragment(BaseFragment fragment){
+    protected void addFragment(PPFragment fragment) {
         if(null!=fragment){
             getFragmentManager().beginTransaction().replace(getFragmentContentId(),fragment,fragment.getClass()
             .getSimpleName()).addToBackStack(fragment.getClass().getSimpleName()).commitAllowingStateLoss();
         }
     }
 
-    protected void removeFragment(BaseFragment fragment){
+    protected void removeFragment(PPFragment fragment) {
         if(getFragmentManager().getBackStackEntryCount()>1){
             getFragmentManager().popBackStack();
         }else {
@@ -253,6 +301,14 @@ public abstract class BaseActivity extends AppCompatActivity {
                 mProgressBar.setVisibility(View.GONE);
             }
         }
+    }
+
+    public boolean isActivityResumed() {
+        return this.mActivityState == ActivityState.RESUMED;
+    }
+
+    public boolean isActivityStarted() {
+        return this.mActivityState == ActivityState.STARTED || this.mActivityState == ActivityState.RESUMED;
     }
 
 }

@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.TabLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,12 +12,12 @@ import android.view.ViewGroup;
  * Created by wy on 17-2-21.
  */
 
-public abstract class BaseFragment extends Fragment  {
+public abstract class PPFragment extends Fragment {
 
     protected String TAG = this.getClass().getSimpleName();
-    protected BaseActivity mActivity;
+    protected PPActivity mActivity;
 
-    protected BaseActivity getHoldingActivity(){
+    protected PPActivity getHoldingActivity() {
         return mActivity;
     }
 
@@ -27,16 +26,16 @@ public abstract class BaseFragment extends Fragment  {
     @Override
     public void onAttach(Activity context) {
         super.onAttach(context);
-        this.mActivity = (BaseActivity) context;
+        this.mActivity = (PPActivity) context;
     }
 
-    protected void addFragment(BaseFragment fragment){
+    protected void addFragment(PPFragment fragment) {
         if(null!=fragment){
             getHoldingActivity().addFragment(fragment);
         }
     }
 
-    protected void removeFragment(BaseFragment fragment) {
+    protected void removeFragment(PPFragment fragment) {
         if(null!=fragment){
             getHoldingActivity().removeFragment(fragment);
         }

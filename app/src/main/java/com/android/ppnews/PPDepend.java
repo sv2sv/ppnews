@@ -16,4 +16,11 @@ public class PPDepend {
     public static TintTypedArray resources() {
         return null;
     }
+
+    public static <T> T getFragment(PPActivity activity, int i) {
+        if (null == activity) {
+            throw new NullPointerException("activity is null ");
+        }
+        return (T) activity.getSupportFragmentManager().findFragmentById(i);
+    }
 }

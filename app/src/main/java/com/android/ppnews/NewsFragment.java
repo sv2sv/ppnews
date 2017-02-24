@@ -25,7 +25,7 @@ import retrofit2.Response;
  * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
  * interface.
  */
-public class NewsFragment extends BaseFragment {
+public class NewsFragment extends PPFragment {
 
     // TODO: Customize parameter argument names
     private static final String ARG_STRING  = "args";
@@ -80,7 +80,7 @@ public class NewsFragment extends BaseFragment {
             mRecyclerView.setAdapter(adapter);
             adapter.notifyDataSetChanged();
             mActivity.showProgress(false);
-            ((MainActivity)mActivity).setRefreshing(false);
+            ((HomeActivity) mActivity).setRefreshing(false);
         }
 
         @Override
@@ -99,7 +99,7 @@ public class NewsFragment extends BaseFragment {
             mRecyclerView = (RecyclerView) view;
             mRecyclerView.setLayoutManager(new LinearLayoutManager(context));
             JHCall.getService().getData(JHNewsType.TOP, JHService.KEY).enqueue(mycallback);
-            ((MainActivity)mActivity).setRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            ((HomeActivity) mActivity).setRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
                 @Override
                 public void onRefresh() {
                     JHCall.getService().getData(JHNewsType.TOP, JHService.KEY).enqueue(mycallback);
