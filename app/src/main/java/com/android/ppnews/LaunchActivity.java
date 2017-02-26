@@ -11,10 +11,10 @@ public class LaunchActivity extends PPActivity {
         return R.layout.activity_launch;
     }
 
-    @Override
+/*    @Override
     protected int getFragmentContentId() {
         return R.id.content;
-    }
+    }*/
 
     @Override
     protected void init() {

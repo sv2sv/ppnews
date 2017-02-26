@@ -36,6 +36,7 @@ public class FootBarHelper {
     public FootBarHelper(ViewGroup footerbar, OnTabSelectedListener listener) {
         this.mFooterBar = footerbar;
         this.listener = listener;
+        setupFootButtons();
     }
 
     public void show(){

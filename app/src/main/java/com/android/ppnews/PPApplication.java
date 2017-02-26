@@ -23,6 +23,8 @@ public class PPApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        PPDepend.setup(this);
     }
 
 

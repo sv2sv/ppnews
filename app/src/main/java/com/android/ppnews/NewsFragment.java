@@ -25,9 +25,9 @@ import retrofit2.Response;
  * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
  * interface.
  */
-public class NewsFragment extends PPFragment {
+public class NewsFragment  {
 
-    // TODO: Customize parameter argument names
+   /* // TODO: Customize parameter argument names
     private static final String ARG_STRING  = "args";
 
     private String args ;
@@ -41,10 +41,10 @@ public class NewsFragment extends PPFragment {
     private MyNIRecyclerViewAdapter adapter;
 
     private RecyclerView mRecyclerView;
-    /**
+    *//**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
-     */
+     *//*
     public NewsFragment() {
     }
 
@@ -80,7 +80,7 @@ public class NewsFragment extends PPFragment {
             mRecyclerView.setAdapter(adapter);
             adapter.notifyDataSetChanged();
             mActivity.showProgress(false);
-            ((HomeActivity) mActivity).setRefreshing(false);
+         *//*   ((HomeActivity) mActivity).setRefreshing(false);*//*
         }
 
         @Override
@@ -99,7 +99,7 @@ public class NewsFragment extends PPFragment {
             mRecyclerView = (RecyclerView) view;
             mRecyclerView.setLayoutManager(new LinearLayoutManager(context));
             JHCall.getService().getData(JHNewsType.TOP, JHService.KEY).enqueue(mycallback);
-            ((HomeActivity) mActivity).setRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+          *//*  ((HomeActivity) mActivity).setRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
                 @Override
                 public void onRefresh() {
                     JHCall.getService().getData(JHNewsType.TOP, JHService.KEY).enqueue(mycallback);
@@ -118,7 +118,7 @@ public class NewsFragment extends PPFragment {
                     super.onScrolled(recyclerView, dx, dy);
                 }
             });
-        }
+        }*//*
     }
 
     @Override
@@ -146,7 +146,7 @@ public class NewsFragment extends PPFragment {
         mListener = null;
     }
 
-    /**
+    *//**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
      * to the activity and potentially other fragments contained in that
@@ -155,9 +155,9 @@ public class NewsFragment extends PPFragment {
      * See the Android Training lesson <a href=
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
-     */
+     *//*
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
         void onListFragmentInteraction(JHNew.ResultBean.DataBean item);
-    }
+    }*/
 }

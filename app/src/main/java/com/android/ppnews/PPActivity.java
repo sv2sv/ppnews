@@ -103,7 +103,7 @@ public abstract class PPActivity extends AppCompatActivity {
         setToolbar(true);
         mContentView = (ViewGroup) this.findViewById(android.R.id.content);
       //  setStatusBarTransparent(true);
-        setFullScreen(true);
+       // setFullScreen(true);
         application.addActivity(this);
         init();
 
@@ -270,7 +270,7 @@ public abstract class PPActivity extends AppCompatActivity {
         application.removeActivity(this);
     }
 
-    //布局中Fragment的ID
+  /*  //布局中Fragment的ID
     protected abstract int getFragmentContentId();
 
 
@@ -287,7 +287,7 @@ public abstract class PPActivity extends AppCompatActivity {
         }else {
             finish();
         }
-    }
+    }*/
 
     protected void getProgressBar(int resid) {
         mProgressBar = (ProgressBar) this.findViewById(resid);

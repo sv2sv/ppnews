@@ -4,8 +4,11 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.Looper;
 import android.os.Parcelable;
+import android.support.annotation.Nullable;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.android.ppnews.PPFragment;
 import com.google.common.base.Objects;
@@ -22,7 +25,7 @@ public abstract class StatefullFragment<S extends Parcelable> extends PPFragment
     private final S defaultstate;
     private final int fragmentLayoutResId;
     private final String stateExtraKey;
-    private ArrayList<S> stateStack = Lists.newArrayList();
+    private ArrayList<S> stateStack = new ArrayList<>();
     protected EventHandle<S> mEventHandle;
     private boolean isChangingState;
     private Bundle initialState;
@@ -57,8 +60,8 @@ public abstract class StatefullFragment<S extends Parcelable> extends PPFragment
     }
 
     public final void changeState(S s, boolean z) {
-        if (Objects.equal(state(), s)) {
-            Log.d("state unchanged", new Object[0].toString());
+        if (state() == s) {
+            Log.d("state unchanged", String.valueOf(new Object[0]));
         } else if (!this.isChangingState) {
             this.isChangingState = true;
             S state = state();
@@ -77,8 +80,18 @@ public abstract class StatefullFragment<S extends Parcelable> extends PPFragment
         }
     }
 
+    
+
     @Override
-    protected void initView(View view, Bundle savedInstanceState) {
+    protected View doOnCreateView(LayoutInflater layoutInflater, ViewGroup viewGroup, Bundle bundle) {
+        View inflate = layoutInflater.inflate(this.fragmentLayoutResId, viewGroup, false);
+
+        return inflate;
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         boolean handleExtras;
         if (savedInstanceState != null) {
             handleExtras = handleExtras(savedInstanceState);
@@ -161,7 +174,9 @@ public abstract class StatefullFragment<S extends Parcelable> extends PPFragment
     }
 
     private boolean popStateIfPossible() {
-        Preconditions.checkState(!this.isChangingState);
+        if(isChangingState){
+            throw new IllegalStateException("ischangingState");
+        }
         Parcelable state = state();
         while (this.stateStack.size() > 1) {
             this.stateStack.remove(this.stateStack.size() - 1);
@@ -190,7 +205,9 @@ public abstract class StatefullFragment<S extends Parcelable> extends PPFragment
     }
 
     private void changeStateStack(ArrayList<S> arrayList) {
-        Preconditions.checkState(!this.isChangingState);
+        if(isChangingState){
+            throw new IllegalStateException("ischangingState");
+        }
         this.isChangingState = true;
         Parcelable state = state();
         this.stateStack = arrayList;

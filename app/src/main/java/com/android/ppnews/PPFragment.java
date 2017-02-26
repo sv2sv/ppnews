@@ -1,9 +1,9 @@
 package com.android.ppnews;
 
 import android.app.Activity;
-import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +16,7 @@ public abstract class PPFragment extends Fragment {
 
     protected String TAG = this.getClass().getSimpleName();
     protected PPActivity mActivity;
+    protected View mRootView;
 
     protected PPActivity getHoldingActivity() {
         return mActivity;
@@ -29,7 +30,7 @@ public abstract class PPFragment extends Fragment {
         this.mActivity = (PPActivity) context;
     }
 
-    protected void addFragment(PPFragment fragment) {
+    /*protected void addFragment(PPFragment fragment) {
         if(null!=fragment){
             getHoldingActivity().addFragment(fragment);
         }
@@ -39,20 +40,27 @@ public abstract class PPFragment extends Fragment {
         if(null!=fragment){
             getHoldingActivity().removeFragment(fragment);
         }
-    }
+    }*/
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(getLayoutId(), container, false);
-
-        initView(view, savedInstanceState);
+         View view =  doOnCreateView(inflater,container,savedInstanceState);
+        setRootView(view);
+        onViewCreated(view);
         return view;
     }
 
-    protected abstract void initView(View view, Bundle savedInstanceState);
+    protected  void onViewCreated(View view){
 
-    protected abstract int getLayoutId();
+    }
+
+    protected View doOnCreateView(LayoutInflater layoutInflater, ViewGroup viewGroup, Bundle bundle) {
+        return super.onCreateView(layoutInflater, viewGroup, bundle);
+    }
 
 
+    protected void setRootView(View rootView) {
+        this.mRootView = rootView;
+    }
 }

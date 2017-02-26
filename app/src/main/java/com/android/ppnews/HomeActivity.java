@@ -9,13 +9,9 @@ public class HomeActivity extends PPActivity {
 
     @Override
     public int getLayout() {
-        return R.layout.activity_main;
+        return R.layout.activity_home;
     }
 
-    @Override
-    protected int getFragmentContentId() {
-        return R.id.content;
-    }
 
     @Override
     protected void init() {

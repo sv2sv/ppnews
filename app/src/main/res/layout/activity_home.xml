@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-
+    <TextView
+        android:text="fda fdsa fadf ad"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
     <android.support.v4.widget.DrawerLayout
         android:id="@+id/drawer"
         android:layout_width="match_parent"
@@ -14,13 +17,15 @@
             <fragment
                 android:name="com.android.ppnews.tabfragment.HomeFragment"
                 android:id="@+id/home_fragment"
-            android:layout_width="match_parent"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent" />
         </FrameLayout>
+
 
         <android.support.design.widget.NavigationView
             android:fitsSystemWindows="true"
             android:id="@+id/drawer_nav"
+            android:layout_gravity="start"
             app:headerLayout="@layout/nav_container"
             app:menu="@menu/home_nav_menu"
             android:layout_width="match_parent"

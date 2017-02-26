@@ -1,13 +1,22 @@
 package com.android.ppnews.tabfragment;
 
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
+import android.support.v4.app.Fragment;
+
+import android.support.v4.app.FragmentTransaction;
+
 import android.os.Parcelable;
+
+import android.support.v4.app.FragmentManager;
+import android.support.v7.widget.Toolbar;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.android.ppnews.PPActivity;
 import com.android.ppnews.R;
 
 /**
@@ -17,15 +26,31 @@ import com.android.ppnews.R;
 public class HomeFragment extends StatefullFragment<HomeFragmentState> implements FootBarHelper.OnTabSelectedListener {
     private FootBarHelper mFootBarHelper;
     private ViewGroup mFootBar;
+    private Toolbar mToolbar;
+    private AppBarLayout appBarLayout;
 
     public HomeFragment() {
-        super(new HomeFragmentState(), "HomeFragment_state", R.id.home_fragment);
+        super(new HomeFragmentState(), "HomeFragment_state", R.layout.fragment_home);
     }
 
+
     @Override
-    protected void initView(View view, Bundle savedInstanceState) {
-        mFootBar = (ViewGroup) view.findViewById(R.id.foot_bar_layout);
+    protected void onViewCreated(View inflate) {
+        mFootBar = (ViewGroup) inflate.findViewById(R.id.foot_bar_layout);
+        mFootBarHelper = new FootBarHelper(mFootBar,this);
+        mToolbar = (Toolbar) inflate.findViewById(R.id.toolbar);
+        appBarLayout = (AppBarLayout) inflate.findViewById(R.id.appbar);
+        ((PPActivity)getActivity()).setSupportActionBar(mToolbar);
+
+        mRootView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                Toast.makeText(getContext(),"this is fragment",Toast.LENGTH_LONG).show();
+                return false;
+            }
+        });
     }
+
 
     @Override
     protected void updateViews(HomeFragmentState homeFragmentState, HomeFragmentState homeFragmentState2) {
@@ -55,16 +80,6 @@ public class HomeFragment extends StatefullFragment<HomeFragmentState> implement
         this.mFootBarHelper.setSelectedTab(((HomeFragmentState) state()).homeTab);
     }
 
-    @Override
-    protected int getLayoutId() {
-        return R.layout.fragment_home;
-    }
-
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        mFootBarHelper = new FootBarHelper(mFootBar,this);
-    }
 
     @Override
     public void onTabSelected(HomeTab homeTab) {
@@ -81,4 +96,5 @@ public class HomeFragment extends StatefullFragment<HomeFragmentState> implement
     public HomeTabFragment getHomeTabFragment() {
         return (HomeTabFragment) getChildFragmentManager().findFragmentByTag(((HomeFragmentState) state()).homeTab.toString());
     }
+
 }
