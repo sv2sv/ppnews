@@ -19,6 +19,7 @@ public class MyNIRecyclerViewAdapter extends RecyclerView.Adapter<MyNIRecyclerVi
     private static String TAG = "adapter";
     private final List<JHNew.ResultBean.DataBean> mValues;
     private final OnListFragmentInteractionListener mListener;
+    private static final  int ERROR = -1;
     public interface  OnListFragmentInteractionListener{
         void onListFragmentInteraction(JHNew.ResultBean.DataBean item);
     }
@@ -29,15 +30,29 @@ public class MyNIRecyclerViewAdapter extends RecyclerView.Adapter<MyNIRecyclerVi
 
             Log.i(TAG, "MyNIRecyclerViewAdapter: "+mValues.size());
         }
-
     }
 
     @Override
+    public int getItemViewType(int position) {
+        if(mValues == null || mValues.size() == 0){
+            return  ERROR;
+        }
+        return 1;
+    }
+
+
+    @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
+        View view;
+        if(viewType == ERROR){
+                    view = LayoutInflater.from(parent.getContext())
+                            .inflate(R.layout.error_unline, parent, false);
+            return new ErrorViewHolder(view);
+                }
+        view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.fragment_newsitem, parent, false);
         Log.i(TAG, "onCreateViewHolder: "+"oncreateviewholder");
-        return new ViewHolder(view);
+        return new MyViewHolder(view);
     }
 
     @Override
@@ -47,27 +62,33 @@ public class MyNIRecyclerViewAdapter extends RecyclerView.Adapter<MyNIRecyclerVi
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
+        if(holder instanceof  MyViewHolder) {
+            final  MyViewHolder mholder = (MyViewHolder ) holder;
+            mholder.mItem = mValues.get(position);
+            mholder.mTitle.setText(mholder.mItem.getTitle());
+            mholder.mTime.setText(mholder.mItem.getDate());
+            mholder.mFrom.setText(mholder.mItem.getCategory());
+            Log.i(TAG, "onBindViewHolder: " + mholder.mItem.toString());
 
-        holder.mItem = mValues.get(position);
-        holder.mTitle.setText(holder.mItem.getTitle());
-        holder.mTime.setText(holder.mItem.getDate());
-        holder.mFrom.setText(holder.mItem.getCategory());
-        Log.i(TAG, "onBindViewHolder: "+holder.mItem.toString());
-
-        holder.mView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (null != mListener) {
-                    // Notify the active callbacks interface (the activity, if the
-                    // fragment is attached to one) that an item has been selected.
-                    mListener.onListFragmentInteraction(holder.mItem);
+            mholder.mView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (null != mListener) {
+                        // Notify the active callbacks interface (the activity, if the
+                        // fragment is attached to one) that an item has been selected.
+                        mListener.onListFragmentInteraction(mholder.mItem);
+                    }
                 }
-            }
-        });
+            });
+        }
     }
 
     @Override
     public int getItemCount() {
+
+        if(mValues == null || mValues.size() == 0){
+            return 1;
+        }
         Log.i(TAG, "getItemCount: "+mValues.size());
         return mValues.size();
     }
@@ -77,7 +98,14 @@ public class MyNIRecyclerViewAdapter extends RecyclerView.Adapter<MyNIRecyclerVi
         return position;
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public abstract  class  ViewHolder extends RecyclerView.ViewHolder{
+
+        public ViewHolder(View itemView) {
+            super(itemView);
+        }
+    }
+
+    public class MyViewHolder extends ViewHolder {
         public final TextView mTitle;
         public final TextView mDesc;
         public final ImageView mImg;
@@ -89,7 +117,7 @@ public class MyNIRecyclerViewAdapter extends RecyclerView.Adapter<MyNIRecyclerVi
         public final View mView;
         public JHNew.ResultBean.DataBean mItem;
 
-        public ViewHolder(View view) {
+        public MyViewHolder(View view) {
             super(view);
             mView = view;
             mTitle = (TextView) mView.findViewById(R.id.title_news);
@@ -102,5 +130,13 @@ public class MyNIRecyclerViewAdapter extends RecyclerView.Adapter<MyNIRecyclerVi
             mMore = (ImageButton) mView.findViewById(R.id.more_btn);
         }
 
+    }
+    public class ErrorViewHolder extends ViewHolder{
+        private View view ;
+
+        public ErrorViewHolder(View itemView) {
+            super(itemView);
+            this.view = itemView;
+        }
     }
 }

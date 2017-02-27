@@ -1,12 +1,15 @@
 package com.android.ppnews.tabfragment;
 
 import android.graphics.Color;
+import android.os.Parcelable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
 import com.android.ppnews.MyNIRecyclerViewAdapter;
+import com.android.ppnews.PPApplication;
 import com.android.ppnews.R;
 import com.android.ppnews.net.JHCall;
 import com.android.ppnews.net.JHNewsType;
@@ -28,6 +31,7 @@ public class ForYouFragment extends StatefullFragment<ForYouFragmentState> imple
     private RecyclerView mRecyclerView;
     private MyNIRecyclerViewAdapter mAdapter;
 
+
     public ForYouFragment() {
         super(null, "ForYouFragment_state", R.layout.fragment_foryou);
     }
@@ -44,25 +48,64 @@ public class ForYouFragment extends StatefullFragment<ForYouFragmentState> imple
     protected void onViewCreated(View inflate) {
         mSwipeRefreshLayout = (SwipeRefreshLayout) inflate.findViewById(R.id.srl);
         mRecyclerView = (RecyclerView) inflate.findViewById(R.id.list_foryou);
-        mSwipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.colorPrimary), Color.DKGRAY);
-        mSwipeRefreshLayout.setDistanceToTriggerSync(120);
-        mSwipeRefreshLayout.setProgressViewOffset(false, 200, 450);
+
+        setupPullToRefresh();
+        getDataFromNetAndFail();
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getDataFromNetAndFail();
+            }
+        });
+    }
+
+    private void getDataFromNetAndFail() {
         JHCall.getService().getData(JHNewsType.TOP, JHService.KEY).enqueue(new Callback<JHNew>() {
             @Override
             public void onResponse(Call<JHNew> call, Response<JHNew> response) {
                 mAdapter = new MyNIRecyclerViewAdapter(response.body().getResult().getData(), null);
                 mRecyclerView.setAdapter(mAdapter);
+                if(mSwipeRefreshLayout.isRefreshing()){
+                    mSwipeRefreshLayout.setRefreshing(false);
+                }
             }
 
             @Override
             public void onFailure(Call<JHNew> call, Throwable t) {
+                mAdapter = new MyNIRecyclerViewAdapter(null, null);
+                mRecyclerView.setAdapter(mAdapter);
                 Toast.makeText(getContext(),"net fail",Toast.LENGTH_LONG).show();
+                if(mSwipeRefreshLayout.isRefreshing()){
+                    mSwipeRefreshLayout.setRefreshing(false);
+                }
             }
         });
     }
 
+    private void setupPullToRefresh() {
+        mSwipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.colorPrimary), Color.DKGRAY);
+        mSwipeRefreshLayout.setDistanceToTriggerSync(120);
+        mSwipeRefreshLayout.setProgressViewOffset(false, 200, 450);
+    }
+
     @Override
     protected void updateViews(ForYouFragmentState forYouFragmentState, ForYouFragmentState state) {
+        this.mRecyclerView.setTag(forYouFragmentState);
+        if(forYouFragmentState != state){
+            ((PPApplication)getActivity().getApplication()).showToast("false",1);
+            mSwipeRefreshLayout.setRefreshing(false);
+            mSwipeRefreshLayout.setEnabled(false);
+        }
 
+    }
+
+
+
+    @Override
+    public void onDestroyView() {
+        ((PPApplication)getActivity().getApplication()).showToast("onDestroyView",1);
+        mSwipeRefreshLayout.setRefreshing(false);
+        mRecyclerView.setAdapter(null);
+        super.onDestroyView();
     }
 }

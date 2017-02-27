@@ -1,5 +1,7 @@
 package com.android.ppnews.tabfragment;
 
+import android.graphics.Color;
+import android.os.Build;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
@@ -13,6 +15,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewOutlineProvider;
 import android.widget.Toast;
 
 import com.android.ppnews.PPActivity;
@@ -20,6 +23,7 @@ import com.android.ppnews.R;
 import com.android.ppnews.tabfragment.helper.FootBarHelper;
 import com.android.ppnews.tabfragment.state.HomeFragmentState;
 import com.android.ppnews.tabfragment.tab.HomeTab;
+import com.android.ppnews.view.OverlayAppBarBehavior;
 
 /**
  * Created by wy on 17-2-24.
@@ -48,7 +52,7 @@ public class HomeFragment extends StatefullFragment<HomeFragmentState> implement
         this.mContentContainer = (ViewGroup) inflate.findViewById(R.id.home_fragment_content);
         this.mCoordinatorLayout = (CoordinatorLayout) inflate.findViewById(R.id.main_content);
         ((PPActivity)getActivity()).setSupportActionBar(mToolbar);
-
+        this.mCoordinatorLayout.setStatusBarBackgroundColor(Color.TRANSPARENT);
         mRootView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -57,6 +61,7 @@ public class HomeFragment extends StatefullFragment<HomeFragmentState> implement
             }
         });
     }
+
 
 
     @Override
@@ -74,13 +79,37 @@ public class HomeFragment extends StatefullFragment<HomeFragmentState> implement
            /* if (homeFragmentState.initialCardId != null && (findFragmentByTag instanceof CardListFragment)) {
                 ((CardListFragment) findFragmentByTag).setInitialCardId(((HomeFragmentState) state()).initialCardId);
             }*/
-           /* updateCoordinatorLayout();
+            updateCoordinatorLayout();
             updateAppBarLayout();
-            updateToolbar();*/
+            updateToolbar();
             updateTabBar();
           /*  updateImmersiveMode();
             getNavigationDrawerActivity().updateDrawerEntries();*/
         }
+    }
+
+    private void updateToolbar() {
+        ((PPActivity)getActivity()).setSupportActionBar(this.mToolbar);
+        ((PPActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+    }
+
+    private void updateCoordinatorLayoutBehaviors(AppBarLayout.Behavior behavior, CoordinatorLayout.Behavior behavior2, int i) {
+
+        ((CoordinatorLayout.LayoutParams) this.mAppbarLayout.getLayoutParams()).setBehavior(behavior);
+        ((CoordinatorLayout.LayoutParams) this.mContentContainer.getLayoutParams()).setBehavior(behavior2);
+        ((AppBarLayout.LayoutParams) this.mToolbar.getLayoutParams()).setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_ENTER_ALWAYS | AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL);
+    }
+
+    private void updateAppBarLayout() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            this.mAppbarLayout.setOutlineProvider(ViewOutlineProvider.PADDED_BOUNDS);
+        }
+    }
+
+    private void updateCoordinatorLayout() {
+        updateCoordinatorLayoutBehaviors(new OverlayAppBarBehavior(),
+                new AppBarLayout.ScrollingViewBehavior(), AppBarLayout.LayoutParams.SCROLL_FLAG_ENTER_ALWAYS| AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL);
     }
 
     private void updateTabBar() {

@@ -188,7 +188,7 @@ public abstract class StatefullFragment<S extends Parcelable> extends PPFragment
                 this.isChangingState = true;
                 Log.d("popState: %s", String.valueOf(new Object[]{state2}));
                 onStateSet((S) state2);
-                updateViews((S) state2, (S) state);
+                updateViews((S)state2,  (S)state);
                 this.isChangingState = false;
                 if (this.mEventHandle != null) {
                     this.mEventHandle.onStateChanged(this, (S) state2, (S) state);
