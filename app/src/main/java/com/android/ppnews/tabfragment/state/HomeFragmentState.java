@@ -1,9 +1,9 @@
-package com.android.ppnews.tabfragment;
+package com.android.ppnews.tabfragment.state;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.google.common.base.Objects;
+import com.android.ppnews.tabfragment.tab.HomeTab;
 
 /**
  * Created by wangyao on 24/2/17.
@@ -42,7 +42,7 @@ public class HomeFragmentState implements Parcelable {
             return false;
         }
         HomeFragmentState homeFragmentState = (HomeFragmentState) obj;
-        if (Objects.equal(this.homeTab, homeFragmentState.homeTab) && Objects.equal(this.initialCardId, homeFragmentState.initialCardId)) {
+        if(this.homeTab == homeFragmentState.homeTab || (this.homeTab !=null && this.homeTab.equals(homeFragmentState.homeTab))){
             return true;
         }
         return false;

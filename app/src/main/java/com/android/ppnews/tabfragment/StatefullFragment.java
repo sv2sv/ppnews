@@ -153,8 +153,11 @@ public abstract class StatefullFragment<S extends Parcelable> extends PPFragment
 
     @SuppressLint("LongLogTag")
     public final void pushState(S s, boolean z) {
-        Preconditions.checkState(!this.isChangingState);
-        if (Objects.equal(state(), s)) {
+        if(this.isChangingState){
+            throw  new IllegalStateException("isChangingState");
+        }
+
+        if(state() == s || (s!=null && s.equals(state()))){
             Log.w("Trying to push the same state", String.valueOf(new Object[0]));
             return;
         }

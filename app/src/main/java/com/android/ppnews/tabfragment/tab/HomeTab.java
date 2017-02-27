@@ -1,8 +1,10 @@
-package com.android.ppnews.tabfragment;
+package com.android.ppnews.tabfragment.tab;
 
 import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
+
+import com.android.ppnews.tabfragment.HomeTabFragment;
 
 import java.util.Locale;
 

@@ -1,4 +1,4 @@
-package com.android.ppnews.tabfragment;
+package com.android.ppnews.tabfragment.helper;
 
 import android.animation.ValueAnimator;
 import android.content.res.ColorStateList;
@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.android.ppnews.PPDepend;
 import com.android.ppnews.R;
+import com.android.ppnews.tabfragment.tab.HomeTab;
 
 import java.util.Map;
 
@@ -29,7 +30,7 @@ public class FootBarHelper {
     private final int selectedTextSize = PPDepend.resources().getDimensionPixelSize(R.dimen.foot_button_text_size_selected);
     private final ViewGroup mFooterBar;
     private final Map<HomeTab, ViewGroup> tabs = new ArrayMap();
-    interface OnTabSelectedListener {
+    public interface OnTabSelectedListener {
         void onTabSelected(HomeTab homeTab);
     }
 

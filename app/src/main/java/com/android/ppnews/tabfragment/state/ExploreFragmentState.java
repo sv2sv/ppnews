@@ -1,4 +1,4 @@
-package com.android.ppnews.tabfragment;
+package com.android.ppnews.tabfragment.state;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -29,5 +29,16 @@ public class ExploreFragmentState implements Parcelable{
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof ForYouFragmentState)) {
+            return false;
+        }
+        if(this == obj){
+            return  true;
+        }
+        return super.equals(obj);
     }
 }

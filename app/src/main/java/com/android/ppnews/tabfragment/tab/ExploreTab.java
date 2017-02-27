@@ -1,8 +1,10 @@
-package com.android.ppnews.tabfragment;
+package com.android.ppnews.tabfragment.tab;
 
 import android.content.Context;
 
 import com.android.ppnews.R;
+import com.android.ppnews.tabfragment.ExploreFragment;
+import com.android.ppnews.tabfragment.HomeTabFragment;
 
 /**
  * Created by wy on 17-2-23.
@@ -14,7 +16,7 @@ public class ExploreTab extends HomeTab {
 
     @Override
     public HomeTabFragment getFragment(Context context) {
-        return null;
+        return new ExploreFragment();
     }
 
     @Override

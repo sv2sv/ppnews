@@ -21,7 +21,7 @@ public class PPDepend {
     private  static Object lock = new Object();
 
     public static int getColorResource(int grey_600) {
-        return 0;
+        return impl.getResources().getColor(grey_600);
     }
 
     public static Resources resources() {

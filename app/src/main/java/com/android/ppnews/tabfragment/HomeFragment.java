@@ -1,8 +1,7 @@
 package com.android.ppnews.tabfragment;
 
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
 
 import android.support.v4.app.FragmentTransaction;
@@ -18,6 +17,9 @@ import android.widget.Toast;
 
 import com.android.ppnews.PPActivity;
 import com.android.ppnews.R;
+import com.android.ppnews.tabfragment.helper.FootBarHelper;
+import com.android.ppnews.tabfragment.state.HomeFragmentState;
+import com.android.ppnews.tabfragment.tab.HomeTab;
 
 /**
  * Created by wy on 17-2-24.
@@ -27,7 +29,10 @@ public class HomeFragment extends StatefullFragment<HomeFragmentState> implement
     private FootBarHelper mFootBarHelper;
     private ViewGroup mFootBar;
     private Toolbar mToolbar;
-    private AppBarLayout appBarLayout;
+    private AppBarLayout mAppbarLayout;
+    private ViewGroup mContentContainer;
+    private CoordinatorLayout mCoordinatorLayout;
+
 
     public HomeFragment() {
         super(new HomeFragmentState(), "HomeFragment_state", R.layout.fragment_home);
@@ -36,10 +41,12 @@ public class HomeFragment extends StatefullFragment<HomeFragmentState> implement
 
     @Override
     protected void onViewCreated(View inflate) {
-        mFootBar = (ViewGroup) inflate.findViewById(R.id.foot_bar_layout);
-        mFootBarHelper = new FootBarHelper(mFootBar,this);
-        mToolbar = (Toolbar) inflate.findViewById(R.id.toolbar);
-        appBarLayout = (AppBarLayout) inflate.findViewById(R.id.appbar);
+        this.mFootBar = (ViewGroup) inflate.findViewById(R.id.foot_bar_layout);
+        this.mFootBarHelper = new FootBarHelper(mFootBar,this);
+        this.mToolbar = (Toolbar) inflate.findViewById(R.id.toolbar);
+        this.mAppbarLayout = (AppBarLayout) inflate.findViewById(R.id.appbar);
+        this.mContentContainer = (ViewGroup) inflate.findViewById(R.id.home_fragment_content);
+        this.mCoordinatorLayout = (CoordinatorLayout) inflate.findViewById(R.id.main_content);
         ((PPActivity)getActivity()).setSupportActionBar(mToolbar);
 
         mRootView.setOnTouchListener(new View.OnTouchListener() {

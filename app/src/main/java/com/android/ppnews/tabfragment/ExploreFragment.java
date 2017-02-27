@@ -1,9 +1,9 @@
 package com.android.ppnews.tabfragment;
 
-import android.os.Bundle;
 import android.view.View;
 
-import com.android.ppnews.PPFragment;
+import com.android.ppnews.R;
+import com.android.ppnews.tabfragment.state.ExploreFragmentState;
 
 /**
  * Created by wy on 17-2-23.
@@ -13,7 +13,7 @@ public class ExploreFragment extends StatefullFragment<ExploreFragmentState> imp
 
 
     public ExploreFragment() {
-        super(null, "ExploreFragment_state", 0);
+        super(null, "ExploreFragment_state", R.layout.fragment_explore);
     }
 
     @Override

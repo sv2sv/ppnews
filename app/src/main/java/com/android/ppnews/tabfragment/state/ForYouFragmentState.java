@@ -1,4 +1,4 @@
-package com.android.ppnews.tabfragment;
+package com.android.ppnews.tabfragment.state;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -7,13 +7,13 @@ import android.os.Parcelable;
  * Created by wy on 17-2-26.
  */
 public class ForYouFragmentState implements Parcelable {
-    protected ForYouFragmentState(Parcel in) {
+    protected ForYouFragmentState() {
     }
 
     public static final Creator<ForYouFragmentState> CREATOR = new Creator<ForYouFragmentState>() {
         @Override
         public ForYouFragmentState createFromParcel(Parcel in) {
-            return new ForYouFragmentState(in);
+            return new ForYouFragmentState();
         }
 
         @Override
@@ -30,4 +30,15 @@ public class ForYouFragmentState implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
     }
+
+    public boolean equals(Object obj) {
+        if (!(obj instanceof ForYouFragmentState)) {
+            return false;
+        }
+        if(this == obj){
+            return  true;
+        }
+        return false;
+    }
+
 }

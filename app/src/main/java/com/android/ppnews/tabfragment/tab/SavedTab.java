@@ -1,8 +1,11 @@
-package com.android.ppnews.tabfragment;
+package com.android.ppnews.tabfragment.tab;
 
 import android.content.Context;
 
 import com.android.ppnews.R;
+import com.android.ppnews.tabfragment.HomeTabFragment;
+import com.android.ppnews.tabfragment.SavedFragment;
+import com.android.ppnews.tabfragment.tab.HomeTab;
 
 /**
  * Created by wy on 17-2-23.
@@ -14,7 +17,7 @@ public class SavedTab extends HomeTab {
 
     @Override
     public HomeTabFragment getFragment(Context context) {
-        return null;
+        return new SavedFragment();
     }
 
     @Override

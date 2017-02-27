@@ -1,4 +1,4 @@
-package com.android.ppnews.tabfragment;
+package com.android.ppnews.tabfragment.helper;
 
 import android.graphics.PointF;
 import android.support.design.widget.AppBarLayout;

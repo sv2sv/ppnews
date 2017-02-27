@@ -1,21 +1,19 @@
 package com.android.ppnews.tabfragment;
 
 import android.graphics.Color;
-import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Toast;
 
 import com.android.ppnews.MyNIRecyclerViewAdapter;
-import com.android.ppnews.PPFragment;
 import com.android.ppnews.R;
 import com.android.ppnews.net.JHCall;
 import com.android.ppnews.net.JHNewsType;
 import com.android.ppnews.net.JHService;
 import com.android.ppnews.pojo.JHNew;
-
-import java.util.List;
+import com.android.ppnews.tabfragment.helper.RefreshHelper;
+import com.android.ppnews.tabfragment.state.ForYouFragmentState;
 
 import retrofit2.Call;
 import retrofit2.Callback;
