@@ -1,10 +1,8 @@
 package com.android.ppnews.tabfragment;
 
 import android.graphics.Color;
-import android.os.Parcelable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -18,6 +16,8 @@ import com.android.ppnews.pojo.JHNew;
 import com.android.ppnews.tabfragment.helper.RefreshHelper;
 import com.android.ppnews.tabfragment.state.ForYouFragmentState;
 
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -30,6 +30,7 @@ public class ForYouFragment extends StatefullFragment<ForYouFragmentState> imple
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private RecyclerView mRecyclerView;
     private MyNIRecyclerViewAdapter mAdapter;
+    private List<JHNew.ResultBean.DataBean> datas;
 
 
     public ForYouFragment() {
@@ -82,6 +83,16 @@ public class ForYouFragment extends StatefullFragment<ForYouFragmentState> imple
         });
     }
 
+    public enum A {
+        ad("a", 1), fd("f", 2);
+        private String a;
+        private int i;
+
+        A(String str, int i) {
+            this.a = str;
+        }
+    }
+
     private void setupPullToRefresh() {
         mSwipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.colorPrimary), Color.DKGRAY);
         mSwipeRefreshLayout.setDistanceToTriggerSync(120);
@@ -107,5 +118,24 @@ public class ForYouFragment extends StatefullFragment<ForYouFragmentState> imple
         mSwipeRefreshLayout.setRefreshing(false);
         mRecyclerView.setAdapter(null);
         super.onDestroyView();
+    }
+
+    public List<JHNew.ResultBean.DataBean> getDa(String type) {
+        JHCall.getService().getData(type, JHService.KEY).enqueue(new Callback<JHNew>() {
+            @Override
+            public void onResponse(Call<JHNew> call, Response<JHNew> response) {
+                datas = response.body().getResult().getData();
+            }
+
+            @Override
+            public void onFailure(Call<JHNew> call, Throwable t) {
+
+            }
+        });
+        for (JHNew.ResultBean.DataBean d : datas) {
+
+        }
+
+        return datas;
     }
 }
