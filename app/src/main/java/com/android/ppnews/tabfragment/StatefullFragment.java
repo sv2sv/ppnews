@@ -85,7 +85,6 @@ public abstract class StatefullFragment<S extends Parcelable> extends PPFragment
     @Override
     protected View doOnCreateView(LayoutInflater layoutInflater, ViewGroup viewGroup, Bundle bundle) {
         View inflate = layoutInflater.inflate(this.fragmentLayoutResId, viewGroup, false);
-
         return inflate;
     }
 

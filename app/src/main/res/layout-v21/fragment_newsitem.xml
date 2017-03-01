@@ -5,24 +5,25 @@
     android:layout_height="wrap_content"
     app:cardElevation="2dp"
     app:cardCornerRadius="0dp"
-    android:layout_marginTop="3dp"
-    android:layout_marginBottom="4dp"
-    app:contentPadding="20dp"
+    android:layout_marginTop="5dp"
+    android:layout_marginBottom="6dp"
+    android:clickable="true"
+    app:contentPadding="7dp"
+    android:foreground="?android:attr/selectableItemBackgroundBorderless"
     >
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-    android:paddingTop="8dp"
-    android:paddingBottom="8dp"
-    android:paddingStart="10dp"
-    android:paddingEnd="0dp">
+        android:paddingTop="3dp"
+        android:paddingBottom="3dp"
+        android:paddingStart="5dp"
+        android:paddingEnd="0dp">
 
         <LinearLayout
             android:layout_centerVertical="true"
             android:layout_alignTop="@+id/img_news"
             android:layout_alignBottom="@+id/img_news"
-            android:layout_margin="10dp"
             android:layout_alignParentStart="true"
             android:layout_toLeftOf="@+id/img_news"
             android:orientation="vertical"
@@ -47,8 +48,8 @@
             android:background="@color/colorAccent"
             android:layout_alignParentRight="true"
             android:id="@+id/img_news"
-            android:layout_width="50dp"
-            android:layout_height="50dp" />
+            android:layout_width="82dp"
+            android:layout_height="75dp" />
 
     <RelativeLayout
         android:gravity="center_vertical"
@@ -127,6 +128,7 @@
         android:layout_marginStart="10dp"
         android:paddingStart="8dp"
         android:hint="ningdenei"
+        android:visibility="gone"
         android:layout_below="@id/rl2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />

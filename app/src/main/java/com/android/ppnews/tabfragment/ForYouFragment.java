@@ -1,13 +1,20 @@
 package com.android.ppnews.tabfragment;
 
+import android.content.res.Configuration;
 import android.graphics.Color;
+import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SimpleItemAnimator;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
 
 import com.android.ppnews.MyNIRecyclerViewAdapter;
 import com.android.ppnews.PPApplication;
+import com.android.ppnews.PPDepend;
 import com.android.ppnews.R;
 import com.android.ppnews.net.JHCall;
 import com.android.ppnews.net.JHNewsType;
@@ -33,6 +40,7 @@ public class ForYouFragment extends StatefullFragment<ForYouFragmentState> imple
     private List<JHNew.ResultBean.DataBean> datas;
 
 
+
     public ForYouFragment() {
         super(null, "ForYouFragment_state", R.layout.fragment_foryou);
     }
@@ -49,7 +57,6 @@ public class ForYouFragment extends StatefullFragment<ForYouFragmentState> imple
     protected void onViewCreated(View inflate) {
         mSwipeRefreshLayout = (SwipeRefreshLayout) inflate.findViewById(R.id.srl);
         mRecyclerView = (RecyclerView) inflate.findViewById(R.id.list_foryou);
-
         setupPullToRefresh();
         getDataFromNetAndFail();
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -61,10 +68,21 @@ public class ForYouFragment extends StatefullFragment<ForYouFragmentState> imple
     }
 
     private void getDataFromNetAndFail() {
-        JHCall.getService().getData(JHNewsType.TOP, JHService.KEY).enqueue(new Callback<JHNew>() {
+        JHCall.getService().getData(JHNewsType.TOP.str, JHNewsType.TOP.KEY).enqueue(new Callback<JHNew>() {
             @Override
             public void onResponse(Call<JHNew> call, Response<JHNew> response) {
-                mAdapter = new MyNIRecyclerViewAdapter(response.body().getResult().getData(), null);
+                mAdapter = new MyNIRecyclerViewAdapter(response.body().getResult().getData(), new MyNIRecyclerViewAdapter.onItemClickListener() {
+                    @Override
+                    public void onClick(JHNew.ResultBean.DataBean item) {
+                        FragmentTransaction ft = getParentFragment().getFragmentManager().beginTransaction();
+                        NewDetailFragment newDetailFragment = new NewDetailFragment();
+                        Bundle args = new Bundle();
+                        args.putString("url",item.getUrl());
+                        newDetailFragment.setArguments(args);
+                        ft.replace(R.id.home_fragment_content, newDetailFragment , "NewDetailFragment");
+                        ft.commit();
+                    }
+                });
                 mRecyclerView.setAdapter(mAdapter);
                 if(mSwipeRefreshLayout.isRefreshing()){
                     mSwipeRefreshLayout.setRefreshing(false);
@@ -75,7 +93,7 @@ public class ForYouFragment extends StatefullFragment<ForYouFragmentState> imple
             public void onFailure(Call<JHNew> call, Throwable t) {
                 mAdapter = new MyNIRecyclerViewAdapter(null, null);
                 mRecyclerView.setAdapter(mAdapter);
-                Toast.makeText(getContext(),"net fail",Toast.LENGTH_LONG).show();
+                PPDepend.showToast("net fail",1);
                 if(mSwipeRefreshLayout.isRefreshing()){
                     mSwipeRefreshLayout.setRefreshing(false);
                 }
@@ -83,15 +101,6 @@ public class ForYouFragment extends StatefullFragment<ForYouFragmentState> imple
         });
     }
 
-    public enum A {
-        ad("a", 1), fd("f", 2);
-        private String a;
-        private int i;
-
-        A(String str, int i) {
-            this.a = str;
-        }
-    }
 
     private void setupPullToRefresh() {
         mSwipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.colorPrimary), Color.DKGRAY);
@@ -101,9 +110,10 @@ public class ForYouFragment extends StatefullFragment<ForYouFragmentState> imple
 
     @Override
     protected void updateViews(ForYouFragmentState forYouFragmentState, ForYouFragmentState state) {
+        this.mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         this.mRecyclerView.setTag(forYouFragmentState);
         if(forYouFragmentState != state){
-            ((PPApplication)getActivity().getApplication()).showToast("false",1);
+            PPDepend.showToast("false",1);
             mSwipeRefreshLayout.setRefreshing(false);
             mSwipeRefreshLayout.setEnabled(false);
         }
@@ -111,17 +121,16 @@ public class ForYouFragment extends StatefullFragment<ForYouFragmentState> imple
     }
 
 
-
     @Override
     public void onDestroyView() {
-        ((PPApplication)getActivity().getApplication()).showToast("onDestroyView",1);
+        PPDepend.showToast("onDestroyView",1);
         mSwipeRefreshLayout.setRefreshing(false);
         mRecyclerView.setAdapter(null);
         super.onDestroyView();
     }
 
-    public List<JHNew.ResultBean.DataBean> getDa(String type) {
-        JHCall.getService().getData(type, JHService.KEY).enqueue(new Callback<JHNew>() {
+    public List<JHNew.ResultBean.DataBean> getDa(JHNewsType type) {
+        JHCall.getService().getData(type.str, type.KEY).enqueue(new Callback<JHNew>() {
             @Override
             public void onResponse(Call<JHNew> call, Response<JHNew> response) {
                 datas = response.body().getResult().getData();

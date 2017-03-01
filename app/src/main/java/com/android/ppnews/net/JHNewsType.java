@@ -4,17 +4,23 @@ package com.android.ppnews.net;
  * Created by wangyao on 17/2/17.
  */
 
-public class JHNewsType {
+public enum JHNewsType {
 
-    public static final String TOP = "top";
-    public static final String SH = "shehui";
-    public static final String GN = "guonei";
-    public static final String GJ = "guoji";
-    public static final String YL = "yule";
-    public static final String TY = "tiyu";
-    public static final String JS = "junshi";
-    public static final String KJ = "keji";
-    public static final String CJ = "caijing";
-    public static final String SS = "shishang";
+    TOP("top"),
+    SH("shehui"),
+    GN("guonei"),
+    GJ("guoji"),
+    YL("yule"),
+    TY("tiyu"),
+    JS("junshi"),
+    KJ("keji"),
+    CJ("caijing"),
+    SS("shishang");
+    public String KEY ;
+    public String str;
 
+    JHNewsType(java.lang.String str) {
+        this.str = str;
+        this.KEY = "0ce28d8acf22bf9396f4e6a475aded0b";
+    }
 }

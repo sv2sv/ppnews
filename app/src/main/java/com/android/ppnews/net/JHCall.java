@@ -27,8 +27,8 @@ public class JHCall {
         return service;
     }
 
-    public static List<JHNew.ResultBean.DataBean> getDa(String type) {
-        JHCall.getService().getData(type, JHService.KEY).enqueue(new Callback<JHNew>() {
+    public static List<JHNew.ResultBean.DataBean> getDa(JHNewsType type) {
+        JHCall.getService().getData(type.str,type.KEY).enqueue(new Callback<JHNew>() {
             @Override
             public void onResponse(Call<JHNew> call, Response<JHNew> response) {
                 datas = response.body().getResult().getData();

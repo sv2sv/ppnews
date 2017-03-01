@@ -7,8 +7,10 @@ import android.content.res.Resources;
 import android.os.Process;
 import android.support.v7.widget.TintTypedArray;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.util.List;
+import java.util.Random;
 
 /**
  * Created by wangyao on 23/2/17.
@@ -17,8 +19,10 @@ import java.util.List;
 public class PPDepend {
     protected static PPDepend impl;
     private static boolean setupIsDone;
-    private Context appContext;
+    protected Context appContext;
     private  static Object lock = new Object();
+    private Random mRandom ;
+    private Toast mToast;
 
     public static int getColorResource(int grey_600) {
         return impl.getResources().getColor(grey_600);
@@ -60,18 +64,21 @@ public class PPDepend {
             if (setupIsDone) {
                 return;
             }
+
             Log.i("Setup", String.valueOf(new Object[0]));
             impl = new PPDepend();
             impl.appContext = context.getApplicationContext();
-         /*   if (NSApplication.isRunningInFeedbackProcess(context)) {
-                impl.setupInternalFeedback();
-            } else {
-                impl.setupInternal();
-            }*/
+            impl.mRandom = new Random();
+            impl.mToast = new Toast(context);
             setupIsDone = true;
             Log.i("Setup complete.", String.valueOf(new Object[0]));
-            //whenSetup.set(null);
         }
+    }
+    private Random getRandom(){
+        return this.mRandom;
+    }
+    public static Random Random(){
+        return impl.getRandom();
     }
 
     public static String getCurrentProcessName() {
@@ -87,8 +94,21 @@ public class PPDepend {
         }
         return "";
     }
-
     public static boolean isSetupDone() {
         return setupIsDone;
     }
+
+
+    public static void showToast(int textid, int duration){
+
+        impl.mToast = Toast.makeText(appContext(), textid, duration);
+        impl.mToast.show();
+    }
+
+    public static void showToast(String text, int duration) {
+        impl.mToast = Toast.makeText(appContext(), text, duration);
+        impl.mToast.show();
+    }
+
+
 }

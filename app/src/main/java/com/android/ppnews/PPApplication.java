@@ -15,9 +15,7 @@ import java.util.Stack;
 
 public class PPApplication extends Application {
     private static String TAG = "PPApplication";
-
     private Stack<Activity> activityStack = new Stack<Activity>();
-    private Toast mToast;
     private SharedPreferences sp;
 
     @Override
@@ -74,25 +72,7 @@ public class PPApplication extends Application {
     }
 
 
-    public void showToast(String text, int duration) {
-        if (mToast == null) {
-            mToast = Toast.makeText(this, text, duration);
-        } else {
-            mToast.setText(text);
-            mToast.setDuration(duration);
-        }
-        mToast.show();
-    }
 
-    public void showToast(int textid, int duration) {
-        if (mToast == null) {
-            mToast = Toast.makeText(this, textid, duration);
-        } else {
-            mToast.setText(textid);
-            mToast.setDuration(duration);
-        }
-        mToast.show();
-    }
 
     public SharedPreferences getSp() {
         if (null == sp) {

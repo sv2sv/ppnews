@@ -20,27 +20,11 @@ import retrofit2.http.Query;
  */
 
 public interface JHService {
-    @StringDef({
-            JHNewsType.CJ,
-            JHNewsType.GJ,
-            JHNewsType.GN,
-            JHNewsType.JS,
-            JHNewsType.KJ,
-            JHNewsType.SH,
-            JHNewsType.SS,
-            JHNewsType.TOP,
-            JHNewsType.TY,
-            JHNewsType.YL
-    })
-    @Retention(RetentionPolicy.SOURCE)
-    @interface Type {}
 
      String URL = "http://v.juhe.cn/";
 
-     String KEY = "0ce28d8acf22bf9396f4e6a475aded0b";
-
 
     @GET("toutiao/index?")
-    Call<JHNew> getData(@Type @Query("type") String type,@Query("key")String key);
+    Call<JHNew> getData( @Query("type") String type,@Query("key")String key);
 
 }
