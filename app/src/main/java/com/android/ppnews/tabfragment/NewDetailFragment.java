@@ -25,10 +25,10 @@ public class NewDetailFragment extends PPFragment{
     @Override
     protected View doOnCreateView(LayoutInflater layoutInflater, ViewGroup viewGroup, Bundle bundle) {
         Bundle args = getArguments();
-        String url = args.get("url");
+        String url = args.getString("url");
         View view = layoutInflater.inflate(R.layout.fragment_news_details,viewGroup,false);
         mWebView = (WebView) view.findViewById(R.id.webView);
-        mWebView.loadUrl(this.url);
+        mWebView.loadUrl(url);
         return view;
     }
 
