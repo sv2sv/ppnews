@@ -1,5 +1,7 @@
 package com.android.ppnews;
 
+import android.view.MenuItem;
+
 import com.android.ppnews.tabfragment.HomeFragment;
 
 public class HomeActivity extends PPActivity {
@@ -28,5 +30,15 @@ public class HomeActivity extends PPActivity {
         if (!this.mHomeFragment.handleOnBackPressed()) {
             super.onBackPressed();
         }
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        PPDepend.showToast(item.getItemId(),1);
+        if(item.getItemId() == android.R.id.home)
+        {
+            onBackPressed();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

@@ -133,7 +133,7 @@ public abstract class StatefullFragment<S extends Parcelable> extends PPFragment
         return true;
     }
 
-    protected abstract void updateViews(S s, S state);
+    protected abstract void updateViews(S s, S currentState);
 
     protected boolean isChangingState() {
         return this.isChangingState;

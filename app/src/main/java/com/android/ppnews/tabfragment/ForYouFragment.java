@@ -3,6 +3,7 @@ package com.android.ppnews.tabfragment;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -20,8 +21,10 @@ import com.android.ppnews.net.JHCall;
 import com.android.ppnews.net.JHNewsType;
 import com.android.ppnews.net.JHService;
 import com.android.ppnews.pojo.JHNew;
+import com.android.ppnews.tabfragment.detail.NewsDetail;
 import com.android.ppnews.tabfragment.helper.RefreshHelper;
 import com.android.ppnews.tabfragment.state.ForYouFragmentState;
+import com.android.ppnews.tabfragment.state.HomeFragmentState;
 
 import java.util.List;
 
@@ -74,15 +77,20 @@ public class ForYouFragment extends StatefullFragment<ForYouFragmentState> imple
                 mAdapter = new MyNIRecyclerViewAdapter(response.body().getResult().getData(), new MyNIRecyclerViewAdapter.onItemClickListener() {
                     @Override
                     public void onClick(JHNew.ResultBean.DataBean item) {
-                        FragmentTransaction ft = getParentFragment().getFragmentManager().beginTransaction();
+                      /* FragmentManager fm = getParentFragment().getChildFragmentManager();
+                        FragmentTransaction ft = fm.beginTransaction();
                         NewDetailFragment newDetailFragment = new NewDetailFragment();
                         Bundle args = new Bundle();
                         args.putString("url",item.getUrl());
                         newDetailFragment.setArguments(args);
                         ft.replace(R.id.home_fragment_content, newDetailFragment , "NewDetailFragment");
                         ft.commit();
+                        fm.executePendingTransactions();*/
+                        ((HomeFragment)getParentFragment()).pushState(new HomeFragmentState(new NewsDetail(item.getUrl())),false);
                     }
                 });
+
+
                 mRecyclerView.setAdapter(mAdapter);
                 if(mSwipeRefreshLayout.isRefreshing()){
                     mSwipeRefreshLayout.setRefreshing(false);

@@ -12,6 +12,7 @@ import android.os.Parcelable;
 
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,7 @@ import android.view.ViewOutlineProvider;
 import android.widget.Toast;
 
 import com.android.ppnews.PPActivity;
+import com.android.ppnews.PPDepend;
 import com.android.ppnews.R;
 import com.android.ppnews.tabfragment.helper.FootBarHelper;
 import com.android.ppnews.tabfragment.state.HomeFragmentState;
@@ -65,8 +67,8 @@ public class HomeFragment extends StatefullFragment<HomeFragmentState> implement
 
 
     @Override
-    protected void updateViews(HomeFragmentState homeFragmentState, HomeFragmentState homeFragmentState2) {
-        if (homeFragmentState2 == null || !homeFragmentState2.homeTab.equals(homeFragmentState.homeTab)) {
+    protected void updateViews(HomeFragmentState homeFragmentState, HomeFragmentState currentstate) {
+        if (currentstate == null || currentstate.homeTab == null ||(homeFragmentState.homeTab!=null&&!currentstate.homeTab.equals(homeFragmentState.homeTab))) {
             FragmentManager childFragmentManager = getChildFragmentManager();
             Fragment findFragmentByTag = childFragmentManager.findFragmentByTag(homeFragmentState.homeTab.toString());
             if (findFragmentByTag == null) {
@@ -86,11 +88,29 @@ public class HomeFragment extends StatefullFragment<HomeFragmentState> implement
           /*  updateImmersiveMode();
             getNavigationDrawerActivity().updateDrawerEntries();*/
         }
+        if(homeFragmentState != null && homeFragmentState.detail!=null){
+            FragmentManager childFragmentManager = getChildFragmentManager();
+            Fragment findFragmentByTag = childFragmentManager.findFragmentByTag(homeFragmentState.detail.toString());
+            if (findFragmentByTag == null) {
+                FragmentTransaction beginTransaction = childFragmentManager.beginTransaction();
+                findFragmentByTag = (Fragment) homeFragmentState.detail.getFragment(getActivity());
+                beginTransaction.replace(R.id.home_fragment_content, findFragmentByTag, homeFragmentState.detail.toString());
+                beginTransaction.commit();
+            }
+            childFragmentManager.executePendingTransactions();
+
+            updateCoordinatorLayout();
+            updateAppBarLayout();
+            updateToolbar();
+            updateTabBar();
+        }
     }
 
     private void updateToolbar() {
         ((PPActivity)getActivity()).setSupportActionBar(this.mToolbar);
+        ((PPActivity)getActivity()).getSupportActionBar().setHomeButtonEnabled(true);
         ((PPActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 
     }
 
@@ -113,7 +133,12 @@ public class HomeFragment extends StatefullFragment<HomeFragmentState> implement
     }
 
     private void updateTabBar() {
-        this.mFootBarHelper.setSelectedTab(((HomeFragmentState) state()).homeTab);
+        if(state().homeTab!=null) {
+            this.mFootBarHelper.setSelectedTab(((HomeFragmentState) state()).homeTab);
+        }
+        if(state().detail!=null){
+            this.mFootBarHelper.disappearTab();
+        }
     }
 
 

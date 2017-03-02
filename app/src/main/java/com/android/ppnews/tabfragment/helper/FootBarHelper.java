@@ -1,13 +1,21 @@
 package com.android.ppnews.tabfragment.helper;
 
+import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v4.util.ArrayMap;
 import android.support.v4.view.animation.LinearOutSlowInInterpolator;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewPropertyAnimator;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
+import android.view.animation.AnimationUtils;
+import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -30,6 +38,18 @@ public class FootBarHelper {
     private final int selectedTextSize = PPDepend.resources().getDimensionPixelSize(R.dimen.foot_button_text_size_selected);
     private final ViewGroup mFooterBar;
     private final Map<HomeTab, ViewGroup> tabs = new ArrayMap();
+
+    public void disappearTab() {
+
+        ObjectAnimator
+                .ofFloat(mFooterBar,"Alpha",1.0f,0.0f)
+                .ofFloat(mFooterBar,"ScaleY",1.0f,0.2f)
+                .ofInt(mFooterBar,"ScrollY",0,-100)
+                .ofInt()
+                .setDuration(3000)
+                .start();
+    }
+
     public interface OnTabSelectedListener {
         void onTabSelected(HomeTab homeTab);
     }
