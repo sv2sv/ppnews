@@ -3,10 +3,14 @@
     android:orientation="vertical"
     android:id="@+id/drawer_root"
     android:layout_width="match_parent"
+    android:gravity="center"
+    android:background="@color/colorAccent"
+    android:layout_gravity="center"
     android:layout_height="match_parent">
-    <TextView
-        android:text="wangyao is a sb"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+    <com.android.ppnews.view.PPCircleImageView
+        android:background="@color/colorAccent"
+        android:src="@drawable/ada"
+        android:layout_width="200dp"
+        android:layout_height="200dp" />
 
 </LinearLayout>
